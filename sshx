@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+HOST="${1:-}"
+shift || true
+
+if [[ -z "$HOST" ]]; then
+  echo "Usage: sshx <host> [ssh args...]"
+  exit 1
+fi
+
+RETRY=0
+MAX_RETRY=1000
+
+# 指数退避参数
+BASE_DELAY=2
+MAX_DELAY=30
+
+function log() {
+  echo "[$(date '+%F %T')] $*"
+}
+
+function backoff() {
+  local delay=$((BASE_DELAY ** RETRY))
+  if ((delay > MAX_DELAY)); then
+    delay=$MAX_DELAY
+  fi
+  echo "$delay"
+}
+
+function check_network() {
+  ping -c1 -W1 8.8.8.8 >/dev/null 2>&1
+}
+
+function connect() {
+  log "🔌 Connecting to $HOST ..."
+  ssh "$HOST" "$@"
+  return ${PIPESTATUS[0]}
+}
+
+while true; do
+  if ! check_network; then
+    log "🌐 Network seems down, waiting..."
+    sleep 3
+    continue
+  fi
+
+  connect $@
+  EXIT_CODE=$?
+
+  log "⚠️ SSH exited with code $EXIT_CODE"
+
+  case "$EXIT_CODE" in
+  0)
+    log "✅ Clean exit"
+    exit 0
+    ;;
+  130)
+    log "🛑 User interrupted (Ctrl+C)"
+    exit 0
+    ;;
+  255)
+    log "❌ Connection lost / SSH error"
+    ;;
+  *)
+    log "⚠️ Unknown exit code"
+    ;;
+  esac
+
+  ((RETRY++))
+
+  DELAY=$(backoff)
+  log "🔁 Retry #$RETRY in ${DELAY}s"
+
+  echo
+  echo "Choose action:"
+  echo "  [Enter] Retry"
+  echo "  r       Retry now"
+  echo "  q       Quit"
+  echo
+
+  read -t "$DELAY" -n1 -r KEY || true
+
+  case "$KEY" in
+  q)
+    log "👋 Exit by user"
+    exit 0
+    ;;
+  r | "")
+    continue
+    ;;
+  *)
+    continue
+    ;;
+  esac
+done

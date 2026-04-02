@@ -38,6 +38,23 @@ if platform.is_win then
          default_prog = { 'bash', '-l' },
       },
    }
+   -- elseif platform.is_linux then
+   -- -- Note: install wezterm on remote host
+   --    options.ssh_domains = {
+   --       {
+   --          name = 'ssh:qy-dev',
+   --          remote_address = 'qy.machdrive.cn',
+   --          username = 'dev.jitao.mach-mdriver.ws',
+   --          multiplexing = 'None',
+   --          -- remote_command = { "byobu" },
+   --          -- default_prog = { 'ssh', '-t', 'dev.jitao.mach-mdriver.ws@qy.machdrive.cn', 'byobu' },
+   --          -- default_prog = { 'zsh', '-c', 'ssh -t -vvv qy-dev byobu' },
+   --          assume_shell = 'Posix',
+   --          ssh_option = {
+   --             identityfile = '/home/jitao/.ssh/id_rsa',
+   --          },
+   --       },
+   --    }
 end
 
 return options

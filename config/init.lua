@@ -18,6 +18,16 @@ end
 function Config:append(new_options)
    for k, v in pairs(new_options) do
       if self.options[k] ~= nil then
+         if k == 'keys' then
+            -- self.options[k] = {table.unpack(self.options[k]), table.unpack(new_options[k])}
+            -- local merge_keys = {table.unpack(self.options[k]), table.unpack(new_options[k])}
+            local merge_keys = new_options[k]
+            for _, vv in ipairs(self.options[k]) do
+               table.insert(merge_keys, vv)
+            end
+            self.options[k] = merge_keys
+            goto continue
+         end
          wezterm.log_warn(
             'Duplicate config option detected: ',
             { old = self.options[k], new = new_options[k] }
