@@ -5,6 +5,7 @@
 local wezterm = require('wezterm')
 local Cells = require('utils.cells')
 local OptsValidator = require('utils.opts-validator')
+local tc = require('colors.custom').tab_bar
 
 ---
 -- =======================================
@@ -93,18 +94,32 @@ local RENDER_VARIANTS = {
 
 ---@type table<string, Cells.SegmentColors>
 -- stylua: ignore
+-- local colors = {
+--    text_default          = { bg = '#45475A', fg = '#1C1B19' },
+--    text_hover            = { bg = '#5D87A3', fg = '#1C1B19' },
+--    text_active           = { bg = '#74c7ec', fg = '#11111B' },
+--
+--    unseen_output_default = { bg = '#45475A', fg = '#FFA066' },
+--    unseen_output_hover   = { bg = '#5D87A3', fg = '#FFA066' },
+--    unseen_output_active  = { bg = '#74c7ec', fg = '#FFA066' },
+--
+--    scircle_default       = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#45475A' },
+--    scircle_hover         = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#5D87A3' },
+--    scircle_active        = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#74C7EC' },
+-- }
+
 local colors = {
-   text_default          = { bg = '#45475A', fg = '#1C1B19' },
-   text_hover            = { bg = '#5D87A3', fg = '#1C1B19' },
-   text_active           = { bg = '#74c7ec', fg = '#11111B' },
+   text_default          = { bg = tc.inactive_tab.bg_color, fg = tc.inactive_tab.fg_color },
+   text_hover            = { bg = tc.inactive_tab_hover.bg_color, fg = tc.inactive_tab_hover.fg_color },
+   text_active           = { bg = tc.active_tab.bg_color, fg = tc.active_tab.fg_color },
 
-   unseen_output_default = { bg = '#45475A', fg = '#FFA066' },
-   unseen_output_hover   = { bg = '#5D87A3', fg = '#FFA066' },
-   unseen_output_active  = { bg = '#74c7ec', fg = '#FFA066' },
+   unseen_output_default = { bg = tc.inactive_tab.bg_color, fg = '#FFA066' },
+   unseen_output_hover   = { bg = tc.inactive_tab_hover.bg_color, fg = '#FFA066' },
+   unseen_output_active  = { bg = tc.active_tab.bg_color, fg = '#FFA066' },
 
-   scircle_default       = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#45475A' },
-   scircle_hover         = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#5D87A3' },
-   scircle_active        = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#74C7EC' },
+   scircle_default       = { bg = 'rgba(0, 0, 0, 0.4)', fg = tc.inactive_tab.bg_color },
+   scircle_hover         = { bg = 'rgba(0, 0, 0, 0.4)', fg = tc.inactive_tab_hover.bg_color },
+   scircle_active        = { bg = 'rgba(0, 0, 0, 0.4)', fg = tc.active_tab.bg_color },
 }
 
 ---

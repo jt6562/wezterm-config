@@ -3,7 +3,7 @@ local backdrops = require('utils.backdrops')
 local colors = require('colors.custom')
 
 return {
-   max_fps = 120,
+   max_fps = 60,
    front_end = 'WebGpu', ---@type 'WebGpu' | 'OpenGL' | 'Software'
    webgpu_power_preference = 'HighPerformance',
    webgpu_preferred_adapter = gpu_adapters:pick_best(),
@@ -12,7 +12,7 @@ return {
    underline_thickness = '1.5pt',
 
    -- cursor
-   animation_fps = 120,
+   animation_fps = 1,
    cursor_blink_ease_in = 'EaseOut',
    cursor_blink_ease_out = 'EaseOut',
    default_cursor_style = 'BlinkingBlock',
@@ -25,7 +25,7 @@ return {
    background = backdrops:initial_options(false),
 
    -- scrollbar
-   enable_scroll_bar = true,
+   enable_scroll_bar = false,
 
    -- tab bar
    enable_tab_bar = true,
@@ -54,6 +54,7 @@ return {
       active_titlebar_bg = '#090909',
       -- font = fonts.font,
       -- font_size = fonts.font_size,
+      font_size = 14,
    },
    -- inactive_pane_hsb = {
    --    saturation = 0.9,
@@ -71,4 +72,8 @@ return {
       fade_out_duration_ms = 250,
       target = 'CursorColor',
    },
+
+   window_decorations = "INTEGRATED_BUTTONS|RESIZE",
+   -- window_decorations = 'NONE',
+   integrated_title_buttons = { 'Hide', 'Maximize', 'Close' },
 }

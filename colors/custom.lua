@@ -42,7 +42,7 @@ local colorscheme = {
       '#C50F1F', -- red
       '#13A10E', -- green
       '#C19C00', -- yellow
-      '#0037DA', -- blue
+      mocha.blue,
       '#881798', -- magenta/purple
       '#3A96DD', -- cyan
       '#CCCCCC', -- white
@@ -60,15 +60,15 @@ local colorscheme = {
    tab_bar = {
       background = 'rgba(0, 0, 0, 0.4)',
       active_tab = {
-         bg_color = mocha.surface2,
-         fg_color = mocha.text,
+         bg_color = mocha.text,
+         fg_color = mocha.mantle,
       },
       inactive_tab = {
          bg_color = mocha.surface0,
          fg_color = mocha.subtext1,
       },
       inactive_tab_hover = {
-         bg_color = mocha.surface0,
+         bg_color = mocha.surface1,
          fg_color = mocha.text,
       },
       new_tab = {

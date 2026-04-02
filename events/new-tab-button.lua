@@ -35,9 +35,13 @@ local function build_choices()
    for _, v in ipairs(launch_menu) do
       cells:update_segment_text('label_text', v.label)
 
+      local icon = 'icon_default'
+      if v.label:sub(1, 3) == 'ssh' then
+         icon = 'icon_ssh'
+      end
       table.insert(choices, {
          id = tostring(idx),
-         label = wezterm.format(cells:render({ 'icon_default', 'label_text' })),
+         label = wezterm.format(cells:render({ icon, 'label_text' })),
       })
       table.insert(choices_data, {
          args = v.args,
@@ -93,11 +97,11 @@ local choices, choices_data = build_choices()
 
 M.setup = function()
    wezterm.on('new-tab-button-click', function(window, pane, button, default_action)
-      if default_action and button == 'Left' then
+      if default_action and button == 'Right' then
          window:perform_action(default_action, pane)
       end
 
-      if default_action and button == 'Right' then
+      if default_action and button == 'Left' then
          window:perform_action(
             act.InputSelector({
                title = 'InputSelector: Launch Menu',
@@ -112,7 +116,7 @@ M.setup = function()
                      wezterm.log_info(choices_data[tonumber(id)])
                      window:perform_action(
                         act.SpawnCommandInNewTab(choices_data[tonumber(id)]),
-                        pane
+                        _pane
                      )
                   end
                end),
