@@ -36,25 +36,29 @@ elseif platform.is_linux then
 end
 
 local qianli_menu = {
-   { label = 'ssh:qy-dev', args = { 'ssh', 'qy-dev', '-t', 'byobu' } },
-   -- { label = 'ssh:qy-dev', args = { '/home/jitao/.local/bin/sshx', 'qy-dev', '-t', 'byobu' } },
-   -- { label = 'ssh:qy-dev', args = { 'ssh', 'qy-dev', '-t', 'byobu' } },
-   { label = 'ssh:e2edata', args = { 'ssh', 'e2e', '-t', 'byobu' } },
+   { label = 'ssh:qy-dev',
+     args = { 'autossh', '-M', '0', 'qy-dev', '-t', 'byobu' },
+     set_environment_variables = {AUTOSSH_PATH='C:/windows/System32/OpenSSH/ssh.exe'}
+   },
    {
       label = 'bip:训练集群',
-      args = { 'nu', '-l', '-c', 'bipctl sh mc-gpu-l20-0011 -u root' },
+      args = { 'autossh', '-M', '0','qy-dev', '-t', 'bash -lc "/home/jitao/.local/bin/bipctl sh mc-gpu-l20-0011 -u root"' },
+      set_environment_variables = {AUTOSSH_PATH='C:/windows/System32/OpenSSH/ssh.exe'}
    },
    {
       label = 'bip:推理集群',
-      args = { 'nu', '-l', '-c', 'bipctl sh mc-airflow-cpu-0435' },
+      args = { 'autossh', '-M', '0','qy-dev', '-t', 'bash -lc "/home/jitao/.local/bin/bipctl sh mc-airflow-cpu-0435"' },
+      set_environment_variables = {AUTOSSH_PATH='C:/windows/System32/OpenSSH/ssh.exe'}
    },
    {
       label = 'bip:gpfs1',
-      args = { 'nu', '-l', '-c', 'bipctl sh gpfs-034' },
+      args = { 'autossh', '-M', '0','qy-dev', '-t', 'bash -lc "/home/jitao/.local/bin/bipctl sh gpfs-034"' },
+      set_environment_variables = {AUTOSSH_PATH='C:/windows/System32/OpenSSH/ssh.exe'}
    },
    {
       label = 'bip:gpfs2',
-      args = { 'nu', '-l', '-c', 'bipctl sh 10.249.106.11' },
+      args = { 'autossh', '-M', '0','qy-dev', '-t', 'bash -lc "/home/jitao/.local/bin/bipctl sh 10.249.106.11"' },
+      set_environment_variables = {AUTOSSH_PATH='C:/windows/System32/OpenSSH/ssh.exe'}
    }
 }
 
